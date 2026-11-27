@@ -63,7 +63,7 @@ export function Steps({ items }: { items: { kick: string; title: string; text: s
 export function Toc({ items }: { items: { id: string; label: string }[] }) {
   return (
     <Card eyebrow="Contents">
-      <div className="mt-3 grid md:grid-cols-2 md:gap-x-8">
+      <div className="mt-3 flex flex-col">
         {items.map((it, i) => (
           <a key={it.id} href={`#${it.id}`} className="flex items-baseline gap-3.5 border-t border-line py-[11px] text-[14px] leading-5 text-ink hover:text-blue">
             <span className="t-mono tabular text-blue">{String(i + 1).padStart(2, "0")}</span>
