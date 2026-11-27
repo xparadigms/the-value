@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { DOMAINS, NAV } from "@/data/site";
+import { CREDIT, DOMAINS, NAV_PAIRS, type NavItem } from "@/data/site";
 import { LogoMark } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -24,35 +24,60 @@ function Wordmark() {
   );
 }
 
-function NavLinks({ id }: { id: string }) {
+function NavLink({ item, id }: { item: NavItem; id: string }) {
+  const pathname = usePathname();
+  const active = isActive(pathname, item.href);
+  return (
+    <Link
+      href={item.href}
+      title={item.sub}
+      aria-current={active ? "page" : undefined}
+      className={clsx(
+        "relative flex h-9 shrink-0 items-center gap-2 rounded-[10px] px-3 text-[14px] whitespace-nowrap transition-colors duration-200",
+        active ? "text-ink" : "text-ink-2 hover:bg-control hover:text-ink",
+      )}
+    >
+      {active && <motion.span layoutId={`gnb-${id}`} className="absolute inset-0 rounded-[10px] bg-control" transition={{ duration: 0.45, ease: EASE_ENTER }} />}
+      {item.color && <span className="relative size-1.5 rounded-full" style={{ background: item.color }} />}
+      <span className="relative">{item.label}</span>
+    </Link>
+  );
+}
+
+const Divider = () => <span aria-hidden className="mx-2 h-5 w-px shrink-0 bg-line-strong" />;
+
+/** The two pairs: Definition, System // Creation, Exchange. */
+function PairLinks({ id }: { id: string }) {
+  return (
+    <>
+      {NAV_PAIRS.map((pair, i) => (
+        <div key={pair.label} className="flex items-center">
+          {i > 0 && <Divider />}
+          <div role="group" aria-label={pair.label} className="flex items-center gap-0.5">
+            {pair.items.map((item) => (
+              <NavLink key={item.href} item={item} id={id} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
+/** Compact swipeable row for narrow screens; keeps the current page's tab in view. */
+function CompactNav() {
   const pathname = usePathname();
   const ref = useRef<HTMLElement>(null);
-  // In the swipeable row, keep the current page's tab in view.
   useEffect(() => {
     const el = ref.current?.querySelector<HTMLElement>('[aria-current="page"]');
     const row = ref.current?.parentElement;
     if (el && row && row.scrollWidth > row.clientWidth) row.scrollTo({ left: el.offsetLeft - (row.clientWidth - el.offsetWidth) / 2, behavior: "smooth" });
   }, [pathname]);
   return (
-    <nav ref={ref} aria-label={id === "wide" ? "Main" : "Main (compact)"} className="flex w-max items-center gap-0.5">
-      {NAV.map((item) => {
-        const active = isActive(pathname, item.href);
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            title={item.sub}
-            aria-current={active ? "page" : undefined}
-            className={clsx(
-              "relative flex h-9 shrink-0 items-center rounded-[10px] px-3 text-[14px] whitespace-nowrap transition-colors duration-200",
-              active ? "text-ink" : "text-ink-2 hover:bg-control hover:text-ink",
-            )}
-          >
-            {active && <motion.span layoutId={`gnb-${id}`} className="absolute inset-0 rounded-[10px] bg-control" transition={{ duration: 0.45, ease: EASE_ENTER }} />}
-            <span className="relative">{item.label}</span>
-          </Link>
-        );
-      })}
+    <nav ref={ref} aria-label="Main (compact)" className="flex w-max items-center">
+      <PairLinks id="narrow" />
+      <Divider />
+      <NavLink item={CREDIT} id="narrow" />
     </nav>
   );
 }
@@ -120,18 +145,22 @@ export function Gnb() {
   if (pathname === "/login") return null;
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/85 backdrop-blur-xl backdrop-saturate-150">
-      <div className="mx-auto flex h-[var(--gnb-h)] max-w-[1200px] items-center gap-6 px-4 md:px-6">
+      <div className="mx-auto flex h-[var(--gnb-h)] max-w-[1200px] items-center gap-6 px-4 md:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <Wordmark />
-        <div className="hidden min-w-0 flex-1 justify-center lg:flex">
-          <NavLinks id="wide" />
-        </div>
-        <div className="ml-auto flex items-center gap-2 lg:ml-0">
+        <nav aria-label="Main" className="hidden items-center lg:flex">
+          <PairLinks id="wide" />
+        </nav>
+        <div className="ml-auto flex items-center gap-2 lg:justify-self-end">
+          <div className="hidden items-center lg:flex">
+            <NavLink item={CREDIT} id="wide" />
+            <Divider />
+          </div>
           <SitesMenu />
           <ThemeToggle className="hidden sm:flex" />
         </div>
       </div>
       <div className="no-scrollbar relative overflow-x-auto border-t border-line px-2 py-1.5 lg:hidden">
-        <NavLinks id="narrow" />
+        <CompactNav />
       </div>
     </header>
   );

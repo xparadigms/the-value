@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Credit: The Common Mechanism" };
 export default function CreditPage() {
   return (
     <Page>
-      <PageHeader eyebrow="05 · Credit" title="The Common Mechanism" lede="Credit rests on expected future value, and consistent exchange over time creates it. It works the same way in politics and in finance." />
+      <PageHeader eyebrow="Credit · The Common Mechanism" title="The Common Mechanism" lede="Credit rests on expected future value, and consistent exchange over time creates it. It works the same way in politics and in finance." />
 
       <H2 id="two-advances" idx="01">
         Two Advances, One Logic

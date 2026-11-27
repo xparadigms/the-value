@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { CompareTable } from "@/components/compare-table";
 import { Flow } from "@/components/flow";
-import { Card, H2, Page, PageHeader, Prose, Steps } from "@/components/ui";
+import { Card, H2, Page, PageHeader, Pager, Prose, Steps } from "@/components/ui";
 import { CREDIT_LOOP, FOUR_DOMAINS } from "@/data/charts";
 import { DOMAINS } from "@/data/site";
 
@@ -86,7 +86,18 @@ export default function Home() {
           <p>
             The goal is to keep value flowing across the past, the present, and the future. The system is healthy when the value delivered matches the value expected, and it comes under strain when promises exceed what productivity can deliver.
           </p>
+          <p>The two pairs can also fall out of step. Strain appears when politics ranks values the culture no longer holds, or when finance prices value industry has not created.</p>
         </Prose>
+        <Card eyebrow="Three kinds of strain" caption="Each strain is a gap between value expected and value delivered.">
+          <Steps
+            items={[
+              { kick: "01 OVERPROMISE", title: "Promises Outrun Output", text: "Expectations exceed what productivity can deliver, and credit eventually contracts." },
+              { kick: "02 POLITICS ↔ CULTURE", title: "Stale Priorities", text: "Politics ranks values the culture no longer holds, and support is withdrawn." },
+              { kick: "03 FINANCE ↔ INDUSTRY", title: "Unbacked Prices", text: "Finance prices value that industry has not created, and prices fall back." },
+            ]}
+          />
+        </Card>
+        <Pager href="/" />
       </div>
     </Page>
   );

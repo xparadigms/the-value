@@ -8,13 +8,12 @@ The site is password-protected (`src/proxy.ts`). The password is `SITE_PASSWORD`
 
 | Route | What it shows |
 |---|---|
-| `/` | The thesis: the four domains, two pairs, the credit loop, the full system |
+| `/` | The thesis and the full system: the four domains, two pairs, the credit loop, four domains compared, where strain appears |
 | `/culture` | 01. Value Definition |
 | `/politics` | 02. Value System, linking to [politics.heechangkang.org](https://politics.heechangkang.org/) |
 | `/industry` | 03. Value Creation, linking to [value-creation.heechangkang.org](https://value-creation.heechangkang.org/) |
 | `/finance` | 04. Value Exchange, linking to [value-exchange.heechangkang.org](https://value-exchange.heechangkang.org/institutions) |
 | `/credit` | Credit: the common mechanism |
-| `/system` | The full system: four domains compared, where strain appears |
 
 Navigation and the companion sites are data in `src/data/site.ts`; flow diagrams are data in `src/data/charts.ts`, rendered by `src/components/flow.tsx`.
 

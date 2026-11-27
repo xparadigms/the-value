@@ -84,20 +84,34 @@ export const DOMAINS: Domain[] = [
 
 export const domain = (slug: Domain["slug"]) => DOMAINS.find((d) => d.slug === slug)!;
 
-export type NavItem = { href: string; label: string; sub?: string };
+export type NavItem = { href: string; label: string; sub?: string; color?: string };
 
-export const NAV: NavItem[] = [
-  { href: "/", label: "Overview" },
-  { href: "/culture", label: "Culture", sub: "Value Definition" },
-  { href: "/politics", label: "Politics", sub: "Value System" },
-  { href: "/industry", label: "Industry", sub: "Value Creation" },
-  { href: "/finance", label: "Finance", sub: "Value Exchange" },
-  { href: "/credit", label: "Credit", sub: "The Common Mechanism" },
-  { href: "/system", label: "Full System", sub: "Four Domains Compared" },
+/** The global nav: two pairs of domains, named by the role each plays with value. */
+export const NAV_PAIRS: { label: string; items: NavItem[] }[] = [
+  {
+    label: "Define and rank value",
+    items: [
+      { href: "/culture", label: "Definition", sub: "Culture", color: "var(--color-purple)" },
+      { href: "/politics", label: "System", sub: "Politics", color: "var(--color-blue)" },
+    ],
+  },
+  {
+    label: "Create and move value",
+    items: [
+      { href: "/industry", label: "Creation", sub: "Industry", color: "var(--color-green)" },
+      { href: "/finance", label: "Exchange", sub: "Finance", color: "var(--color-orange)" },
+    ],
+  },
 ];
+
+/** Credit sits apart from the pairs: the mechanism common to politics and finance. */
+export const CREDIT: NavItem = { href: "/credit", label: "Credit", sub: "Common Mechanism" };
+
+/** Every page in reading order (the landing page carries the full system). */
+export const PAGES: NavItem[] = [{ href: "/", label: "Overview", sub: "The Full System" }, ...NAV_PAIRS.flatMap((p) => p.items), CREDIT];
 
 /** Previous / next pages in reading order. */
 export function neighbors(href: string) {
-  const i = NAV.findIndex((n) => n.href === href);
-  return { prev: NAV[i - 1], next: NAV[i + 1] };
+  const i = PAGES.findIndex((n) => n.href === href);
+  return { prev: PAGES[i - 1], next: PAGES[i + 1] };
 }
