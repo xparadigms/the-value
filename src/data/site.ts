@@ -107,6 +107,9 @@ export const NAV_PAIRS: { label: string; items: NavItem[] }[] = [
 /** Credit sits apart from the pairs: the mechanism common to politics and finance. */
 export const CREDIT: NavItem = { href: "/credit", label: "Credit", sub: "Common Mechanism" };
 
+/** Writings: essays on the thesis, also on the right of the nav. */
+export const WRITINGS: NavItem = { href: "/writings", label: "Writings", sub: "Essays and notes" };
+
 /** Every page in reading order (the landing page carries the full system). */
 export const PAGES: NavItem[] = [{ href: "/", label: "Overview", sub: "The Full System" }, ...NAV_PAIRS.flatMap((p) => p.items), CREDIT];
 

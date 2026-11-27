@@ -3,7 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DOMAINS, PAGES } from "@/data/site";
+import { DOMAINS, PAGES, WRITINGS } from "@/data/site";
 import { LogoMark } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -28,7 +28,7 @@ export function Footer() {
         <div>
           <p className="t-eyebrow text-ink-3">Thesis</p>
           <ul className="mt-3 space-y-2">
-            {PAGES.map((n) => (
+            {[...PAGES, WRITINGS].map((n) => (
               <li key={n.href}>
                 <Link href={n.href} className="t-b2 text-ink-2 hover:text-ink">
                   {n.label}
