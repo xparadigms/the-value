@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { CREDIT, DOMAINS, NAV_PAIRS, type NavItem } from "@/data/site";
+import { CREDIT, DOMAINS, WRITINGS, NAV_PAIRS, type NavItem } from "@/data/site";
 import { LogoMark } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -78,6 +78,7 @@ function CompactNav() {
       <PairLinks id="narrow" />
       <Divider />
       <NavLink item={CREDIT} id="narrow" />
+      <NavLink item={WRITINGS} id="narrow" />
     </nav>
   );
 }
@@ -153,6 +154,7 @@ export function Gnb() {
         <div className="ml-auto flex items-center gap-2 lg:justify-self-end">
           <div className="hidden items-center lg:flex">
             <NavLink item={CREDIT} id="wide" />
+            <NavLink item={WRITINGS} id="wide" />
             <Divider />
           </div>
           <SitesMenu />
