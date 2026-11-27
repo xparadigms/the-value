@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { AuthorCard } from "@/components/writings/author-card";
 import { Contents } from "@/components/writings/contents";
 import { formatDate, getPost, getPosts, slugify } from "@/lib/writings";
 import { Topic } from "@/components/writings/topic";
@@ -54,9 +55,9 @@ export default async function WritingPage({ params }: Props) {
         <img src={post.cover} alt="" className="mb-16 aspect-[21/9] w-full rounded-[24px] object-cover" />
       )}
 
-      <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)]">
+      <div className="grid gap-12 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[220px_minmax(0,1fr)_240px]">
         <aside className="hidden lg:block">{post.headings.length > 0 && <Contents title={post.title} headings={post.headings} />}</aside>
-        <article className="blog-body max-w-[720px]">
+        <article className="blog-body mx-auto w-full max-w-[720px]">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -67,6 +68,11 @@ export default async function WritingPage({ params }: Props) {
             {post.body}
           </ReactMarkdown>
         </article>
+        <aside className="lg:col-start-2 xl:col-start-3 xl:row-start-1">
+          <div className="mx-auto max-w-[720px] border-t border-line pt-10 xl:sticky xl:top-[calc(var(--gnb-h)+40px)] xl:border-0 xl:pt-0">
+            <AuthorCard />
+          </div>
+        </aside>
       </div>
 
       {(older || newer) && (
